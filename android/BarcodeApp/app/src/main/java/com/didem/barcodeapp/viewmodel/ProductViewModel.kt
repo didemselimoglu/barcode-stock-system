@@ -17,7 +17,7 @@ class ProductViewModel(
     private val _productState = MutableStateFlow<ProductState>(ProductState.Idle)
     val productState: StateFlow<ProductState> = _productState
 
-    // Barkod kodu ile ürün getir
+    // barkod kodu ile ürün getirme
     fun getProductByBarcode(barcodeCode: String) {
         viewModelScope.launch {
             _productState.value = ProductState.Loading
@@ -38,13 +38,12 @@ class ProductViewModel(
         }
     }
 
-    // State'i sıfırla
+    //state sıfırlama
     fun resetState() {
         _productState.value = ProductState.Idle
     }
 }
 
-// Ürün için state
 sealed class ProductState {
     object Idle : ProductState()
     object Loading : ProductState()

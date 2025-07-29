@@ -21,29 +21,29 @@ import com.didem.barcodeapp.viewmodel.ProductState
 @Composable
 fun BarcodeScreen(
     productViewModel: ProductViewModel,
-    onLogout: () -> Unit,
-    onCameraScan: () -> Unit,
+    onLogout: () -> Unit, //çıkış yapma
+    onCameraScan: () -> Unit, //tarama ekranına geçiş
     onProductFound: (String) -> Unit
 ) {
     var barcodeInput by remember { mutableStateOf("") }
     val productState by productViewModel.productState.collectAsState()
 
     Box(modifier = Modifier.fillMaxSize()) {
-
+        //arka plan resmi
         Image(
-            painter = painterResource(id = R.drawable.b),
+            painter = painterResource(id = R.drawable.b), //resim res/drawble paketine kpyalandı
             contentDescription = "Background",
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
         )
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Üst kısım
+
+            // üst kısım barkod okuyucu yazısı ve çıkış düğmesi
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -53,7 +53,6 @@ fun BarcodeScreen(
                     text = "Barkod Okuyucu",
                     style = MaterialTheme.typography.headlineMedium
                 )
-
                 Button(
                     onClick = { onLogout() },
                     colors = ButtonDefaults.buttonColors(
@@ -183,7 +182,7 @@ fun BarcodeScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // ✅ Sonuç gösterimi - Otomatik navigasyon
+            // Sonuç gösterimi
             when (val state = productState) {
                 is ProductState.Success -> {
                     LaunchedEffect(state.product) {

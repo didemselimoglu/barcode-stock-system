@@ -15,7 +15,7 @@ import com.didem.barcodeapp.data.repository.AuthRepository
 import com.didem.barcodeapp.data.repository.ProductRepository
 import com.didem.barcodeapp.ui.screen.LoginScreen
 import com.didem.barcodeapp.ui.screen.BarcodeScreen
-import com.didem.barcodeapp.ui.screen.CameraScanScreen  // ✅ Yeni eklendi
+import com.didem.barcodeapp.ui.screen.CameraScanScreen
 import com.didem.barcodeapp.ui.screen.ProductDetailScreen
 import com.didem.barcodeapp.ui.theme.BarcodeAppTheme
 import com.didem.barcodeapp.viewmodel.LoginViewModel
@@ -35,6 +35,7 @@ class MainActivity : ComponentActivity() {
             BarcodeAppTheme {
                 Surface(color = MaterialTheme.colorScheme.background) {
                     val navController = rememberNavController()
+                    //token kontrolü
                     val startDestination = if (authRepository.getToken() != null) "barcode" else "login"
 
                     NavHost(navController, startDestination) {
@@ -49,18 +50,25 @@ class MainActivity : ComponentActivity() {
                             )
                         }
 
+                        //barkod ekranı
                         composable("barcode") {
                             BarcodeScreen(
                                 productViewModel = productViewModel,
+
+                                //çıkış için token silme
                                 onLogout = {
                                     authRepository.clearToken()
                                     navController.navigate("login") {
                                         popUpTo("barcode") { inclusive = true }
                                     }
                                 },
+
+                                //kamera ekranı
                                 onCameraScan = {
                                     navController.navigate("camera_scan")
                                 },
+
+                                //ürün detay ekranı
                                 onProductFound = { barcodeValue ->
                                     if (barcodeValue.isNotEmpty() && barcodeValue.isNotBlank()) {
                                         productViewModel.resetState()

@@ -1,21 +1,43 @@
 package com.didem.barcodeapp.ui.screen
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.didem.barcodeapp.R
-import com.didem.barcodeapp.viewmodel.LoginViewModel
 import com.didem.barcodeapp.viewmodel.LoginState
+import com.didem.barcodeapp.viewmodel.LoginViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -30,9 +52,9 @@ fun LoginScreen(
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        // Arka plan resmi
+        // arka plan resmi
         Image(
-            painter = painterResource(id = R.drawable.a), // Resim drawable klasöründe
+            painter = painterResource(id = R.drawable.a), // resim drawable klasöründe
             contentDescription = "Background",
             modifier = Modifier
                 .fillMaxSize(),
@@ -48,7 +70,6 @@ fun LoginScreen(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Hoşgeldiniz metni - sadece yazı olarak
             Text(
                 text = "Hoşgeldiniz",
                 style = MaterialTheme.typography.headlineMedium,
@@ -57,9 +78,8 @@ fun LoginScreen(
                     .align(Alignment.CenterHorizontally)
             )
 
-            Spacer(modifier = Modifier.height(16.dp)) // Biraz boşluk bırakmak için
+            Spacer(modifier = Modifier.height(16.dp))
 
-            // Input alanları için şeffaf arka plan
             Card(
                 colors = CardDefaults.cardColors(
                     containerColor = Color.White.copy(alpha = 0.95f)
@@ -140,7 +160,7 @@ fun LoginScreen(
                         }
 
                         else -> {
-                            // Idle veya Loading durumunda ekstra bir şey göstermek istersen buraya
+                            // Idle veya Loading durumunda ekstra bir şey göstermek istersek buraya
                         }
                     }
                 }

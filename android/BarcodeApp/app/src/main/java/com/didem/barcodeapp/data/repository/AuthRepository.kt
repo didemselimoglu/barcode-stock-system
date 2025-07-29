@@ -1,7 +1,7 @@
 package com.didem.barcodeapp.data.repository
 
 import android.content.Context
-import android.content.SharedPreferences
+import android.content.SharedPreferences //girişleri ve tokenları kaydetmek için kullanılır
 import com.didem.barcodeapp.data.model.LoginRequest
 import com.didem.barcodeapp.network.RetrofitClient
 
@@ -29,14 +29,14 @@ class AuthRepository(context: Context) {
     }
 
     private fun saveToken(token: String) {
-        sharedPreferences.edit().putString("auth_token", token).apply()
+        sharedPreferences.edit().putString("auth_token", token).apply() //token kaydetme
     }
 
     fun getToken(): String? {
-        return sharedPreferences.getString("auth_token", null)
+        return sharedPreferences.getString("auth_token", null) //token okuma
     }
 
     fun clearToken() {
-        sharedPreferences.edit().remove("auth_token").apply()
+        sharedPreferences.edit().remove("auth_token").apply() //çıkış için token silme
     }
 }

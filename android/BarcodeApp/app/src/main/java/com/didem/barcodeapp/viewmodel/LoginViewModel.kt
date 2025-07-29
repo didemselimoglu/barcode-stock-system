@@ -1,4 +1,5 @@
 package com.didem.barcodeapp.viewmodel
+// ViewModel sınıfı: UI ile veri katmanı arasındaki köprü
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,14 +10,14 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel(private val authRepository: AuthRepository) : ViewModel() {
 
-
-
     private val _loginState = MutableStateFlow<LoginState>(LoginState.Idle)
     val loginState: StateFlow<LoginState> = _loginState
 
+    // kullanıcı login ekranında giriş yap butonuna bastığında bu fonksiyon çalışır
     fun login(username: String, password: String) {
         viewModelScope.launch {
             _loginState.value = LoginState.Loading
+            // repository üzerinden login işlemi
             authRepository.login(username, password)
                 .onSuccess { token ->
                     _loginState.value = LoginState.Success(token)

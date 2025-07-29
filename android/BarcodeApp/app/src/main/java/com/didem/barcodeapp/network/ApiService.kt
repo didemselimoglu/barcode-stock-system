@@ -1,3 +1,4 @@
+//retrofit arayüzü : get post endpoint'leri tanımlama
 package com.didem.barcodeapp.network
 
 import com.didem.barcodeapp.data.model.LoginRequest
@@ -12,9 +13,11 @@ import retrofit2.http.Path
 
 interface ApiService {
 
+    //kullanıcı girişi için post
     @POST("authenticate")
     suspend fun login(@Body loginRequest: LoginRequest): Response<LoginResponse>
 
+    //barkodla ürün bulmak için get
     @GET("product/{barcodeCode}")
     suspend fun getProductByBarcode(
         @Path("barcodeCode") barcodeCode: String,

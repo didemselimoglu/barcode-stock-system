@@ -1,5 +1,3 @@
-// com/didem/barcodeapp/ui/screen/CameraScanScreen.kt
-//@file:OptIn(ExperimentalMaterial3Api::class)
 
 package com.didem.barcodeapp.ui.screen
 

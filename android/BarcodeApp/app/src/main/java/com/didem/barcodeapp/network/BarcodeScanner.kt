@@ -1,12 +1,18 @@
 package com.didem.barcodeapp.network
 
-import androidx.camera.core.ExperimentalGetImage
+// CameraX ile barkod görseli alma
 import androidx.camera.core.ImageAnalysis
+import androidx.camera.core.ExperimentalGetImage
 import androidx.camera.core.ImageProxy
+
+//ML Kit'in barkod okuma kütüphanesi ile
+// BarcodeScanning API'sı ile barkod analizi
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
 
 class BarcodeScanner(
+
+    //barkod analizi ve gelen barkodu bildirme
     private val onBarcodeDetected: (String) -> Unit
 ) : ImageAnalysis.Analyzer {
 
@@ -18,7 +24,7 @@ class BarcodeScanner(
         if (mediaImage != null) {
             val image = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
 
-            scanner.process(image)
+            scanner.process(image)//barkod cözümleme
                 .addOnSuccessListener { barcodes ->
                     for (barcode in barcodes) {
                         barcode.rawValue?.let { value ->
