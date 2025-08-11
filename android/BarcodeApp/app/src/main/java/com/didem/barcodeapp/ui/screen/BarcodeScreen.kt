@@ -2,6 +2,8 @@ package com.didem.barcodeapp.ui.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Edit
@@ -12,10 +14,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.didem.barcodeapp.R
 import com.didem.barcodeapp.viewmodel.ProductViewModel
 import com.didem.barcodeapp.viewmodel.ProductState
+
+
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -103,7 +109,17 @@ fun BarcodeScreen(
                         onValueChange = { barcodeInput = it },
                         label = { Text("Barkod kodunuzu yazınız") },
                         modifier = Modifier.fillMaxWidth(),
-                        singleLine = true
+                        singleLine = true,
+                        keyboardOptions = KeyboardOptions.Default.copy(
+                            imeAction = ImeAction.Search
+                        ),
+                        keyboardActions = KeyboardActions(
+                            onSearch = {
+                                if (barcodeInput.isNotEmpty()){
+                                    productViewModel.getProductByBarcode(barcodeInput)
+                                }
+                            }
+                        )
                     )
 
                     Spacer(modifier = Modifier.height(12.dp))

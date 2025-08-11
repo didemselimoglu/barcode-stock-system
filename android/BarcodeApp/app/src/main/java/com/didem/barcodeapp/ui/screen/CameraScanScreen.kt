@@ -1,7 +1,7 @@
-
 package com.didem.barcodeapp.ui.screen
 
 import android.Manifest
+import android.util.Log
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
@@ -38,6 +38,12 @@ fun CameraScanScreen(
     val cameraPermissionState = rememberPermissionState(
         permission = Manifest.permission.CAMERA
     )
+
+    DisposableEffect(Unit) {
+        onDispose {
+            cameraExecutor.shutdown()
+        }
+    }
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -99,6 +105,7 @@ private fun CameraPreview(
 ) {
     val context = LocalContext.current
     var hasDetected by remember { mutableStateOf(false) }
+    var errorMessage by remember { mutableStateOf<String?>(null) } //hata mesajı eklemek için
 
     AndroidView(
         factory = { ctx ->
@@ -134,14 +141,28 @@ private fun CameraPreview(
                         preview,
                         imageAnalyzer
                     )
+
                 } catch (exc: Exception) {
-                    // Hata yönetimi
+                    errorMessage = "Kamera başlatılamadı"
+
                 }
 
             }, ContextCompat.getMainExecutor(ctx))
 
             previewView
         },
-        modifier = modifier
-    )
+        modifier = modifier,
+
+        )
+        if (errorMessage != null) {
+            Text(
+                text = errorMessage!!,
+                color = Color.Red,
+                modifier = Modifier.padding(8.dp)
+        )
+    }
 }
+
+
+
+

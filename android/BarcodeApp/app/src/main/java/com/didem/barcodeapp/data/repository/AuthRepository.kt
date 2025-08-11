@@ -18,7 +18,7 @@ class AuthRepository(context: Context) {
                     saveToken(token)
                     Result.success(token)
                 } else {
-                    Result.failure(Exception("Token boş"))
+                    Result.failure(Exception("Giriş Başarısız"))
                 }
             } else {
                 Result.failure(Exception("Giriş başarısız"))

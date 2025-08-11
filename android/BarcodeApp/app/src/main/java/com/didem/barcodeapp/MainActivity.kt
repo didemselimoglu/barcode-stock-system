@@ -21,7 +21,7 @@ import com.didem.barcodeapp.ui.theme.BarcodeAppTheme
 import com.didem.barcodeapp.viewmodel.LoginViewModel
 import com.didem.barcodeapp.viewmodel.ProductViewModel
 
-class MainActivity : ComponentActivity() {
+class MainActivity : ComponentActivity() {                                                                                                                                                                    
     @SuppressLint("ViewModelConstructorInComposable")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

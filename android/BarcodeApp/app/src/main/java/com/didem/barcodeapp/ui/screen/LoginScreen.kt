@@ -25,9 +25,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -45,8 +42,7 @@ fun LoginScreen(
     onLoginSuccess: () -> Unit,
     loginViewModel: LoginViewModel
 ) {
-    var username by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+
     val loginState by loginViewModel.loginState.collectAsState()
 
     Box(
@@ -92,8 +88,8 @@ fun LoginScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     OutlinedTextField(
-                        value = username,
-                        onValueChange = { username = it },
+                        value = loginViewModel.username, //ViewModelden geliyor
+                        onValueChange = loginViewModel :: updateUsername,
                         label = { Text("Kullanıcı Adı") },
                         modifier = Modifier.fillMaxWidth(),
                         colors = OutlinedTextFieldDefaults.colors(
@@ -105,8 +101,8 @@ fun LoginScreen(
                     Spacer(modifier = Modifier.height(16.dp))
 
                     OutlinedTextField(
-                        value = password,
-                        onValueChange = { password = it },
+                        value = loginViewModel.password, //ViewModelden geliyor
+                        onValueChange = loginViewModel :: updatePassword,
                         label = { Text("Şifre") },
                         visualTransformation = PasswordVisualTransformation(),
                         modifier = Modifier.fillMaxWidth(),
@@ -121,7 +117,7 @@ fun LoginScreen(
                     // Kırmızı buton
                     Button(
                         onClick = {
-                            loginViewModel.login(username, password)
+                            loginViewModel.login()
                         },
                         enabled = loginState !is LoginState.Loading,
                         modifier = Modifier
@@ -160,7 +156,7 @@ fun LoginScreen(
                         }
 
                         else -> {
-                            // Idle veya Loading durumunda ekstra bir şey göstermek istersek buraya
+
                         }
                     }
                 }
